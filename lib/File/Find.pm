@@ -37,7 +37,7 @@ sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
         my $elem = @targets.shift;
         # exclude is special because it also stops traversing inside,
         # which checkrules does not
-        next if $elem ~~ $exclude;
+        next if $elem ~~ $exclude.IO.relative;
         take $elem if checkrules($elem, { :$name, :$type, :$exclude });
         if $recursive {
             if $elem.IO ~~ :d {
