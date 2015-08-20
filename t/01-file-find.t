@@ -78,7 +78,7 @@ if 0 {
 }
 
 sub equals(\a, \b, $name) {
-    ok ([&&] a >>~~<< b.map(*.IO)), $name
+    ok ([&&] a >>~~<< b>>.IO), $name
 }
 
 exit 0; # I have no idea what I'm doing, but I get Non-zero exit status w/o this
