@@ -14,6 +14,15 @@ File::Find - Get a lazy list of a directory tree
     my $list = find(dir => 'foo');
     say $list[0..3];
 
+    # eagerly find all Perl-related files from the current directory
+    my @perl-files := find(dir => '.', name => /.p [l||m] $/);
+
+    # lazily find all directories within the 'rakudo' directory
+    my $rakudo-dirs = find(dir => 'rakudo', type => 'dir');
+
+    # lazily find all symlinks a normal user can access under `/etc`
+    my $etc-symlinks = find(dir => '/etc/', type => 'symlink', keep-going => True);
+
 ## DESCRIPTION
 
 `File::Find` allows you to get the contents of the given directory,
