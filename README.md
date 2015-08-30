@@ -6,9 +6,11 @@ File::Find - Get a lazy list of a directory tree
 
     use File::Find;
 
+    # recursively (and eagerly) find all files from the 'foo' directory
     my @list := find(dir => 'foo');
     say @list[0..3];
 
+    # the same as above, but lazily return the results
     my $list = find(dir => 'foo');
     say $list[0..3];
 
