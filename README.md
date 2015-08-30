@@ -24,7 +24,7 @@ list of files in given directory. Every element of the list is an
 `find()` takes one (or more) named arguments. The `dir` argument
 is mandatory, and sets the directory `find()` will traverse.
 
-There are also few optional arguments. If more than one is passed,
+There are also a few optional arguments. If more than one is passed,
 all of them must match for a file to be returned.
 
 **name**
@@ -55,7 +55,7 @@ File::Find::Rule, and its features are planned to be similar one day.
 
 ## CAVEATS
 
-List assignment is eager in Perl 6, so if You assign `find()` result
+List assignment is eager in Perl 6, so if you assign `find()` result
 to an array, the elements will be copied and the laziness will be
 spoiled. For a proper lazy list, use either binding (`:=`) or assign
 a result to a scalar value (see SYNOPSIS).
