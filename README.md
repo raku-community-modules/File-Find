@@ -47,6 +47,10 @@ pattern will be returned. Any other type of argument passed here will
 just be smartmatched against the path (which is exactly what happens to
 regexes passed, by the way).
 
+**exclude**
+
+Specify a regex (or any other smartmatchable type) to exclude files / directories from the search.
+
 **type**
 
 Given a type, `find()` will only return files being the given type.
