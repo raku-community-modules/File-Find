@@ -30,7 +30,7 @@ sub checkrules ($elem, %opts) {
 }
 
 sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
-    Bool :$keep-going = False) is export {
+    Bool :$keep-going = False, :$follow-symlinks = True) is export {
 
     my @targets = dir($dir);
     gather while @targets {
@@ -40,12 +40,14 @@ sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
         next if $elem ~~ $exclude;
         take $elem if checkrules($elem, { :$name, :$type, :$exclude });
         if $recursive {
-            if $elem.IO ~~ :d {
-                @targets.append: dir($elem);
-                CATCH { when X::IO::Dir {
-                    $_.throw unless $keep-going;
-                    next;
-                }}
+            unless !$follow-symlinks and $elem.IO ~~ :l {
+            	if $elem.IO ~~ :d {
+               		@targets.append: dir($elem);
+               		CATCH { when X::IO::Dir {
+                   		$_.throw unless $keep-going;
+                   		next;
+               		}}
+				}
             }
         }
     }
@@ -109,6 +111,12 @@ vs backslashes on different platforms.
 Parameter C<keep-going> tells C<find()> to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
 and keep going.
+
+=head2 follow-symlinks
+
+Paramenter C<follow-symlinks> tells C<find()> whether or not it should 
+follow symlinks during recursive searches. This will still return
+symlinks in its results, if the type parameter allows.
 
 =head1 Perl 5's File::Find
 

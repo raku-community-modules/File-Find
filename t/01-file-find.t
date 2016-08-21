@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use File::Find;
-plan 11;
+plan 13;
 
 my $res = find(:dir<t/dir1>);
 my @test = $res.map({ .Str }).sort;
@@ -47,6 +47,15 @@ $res = find(:dir<t/dir1>, :type<file>,
 @test = $res.map({ .Str }).sort;
 equals @test, <t/dir1/file.bar t/dir1/file.foo t/dir1/foodir/not_a_dir>, 'exclude works';
 
+#follow-symlinks
+$res = find(:dir<t/dir2>);
+@test = $res.map({ .Str }).sort;
+equals @test, <t/dir2/file.foo t/dir2/symdir t/dir2/symdir/empty_file t/dir2/symdir/file.bar>, 'follow-syminks is True';
+
+$res = find(:dir<t/dir2>,
+           follow-symlinks => False);
+@test = $res.map({ .Str }).sort;
+equals @test, <t/dir2/file.foo t/dir2/symdir>, 'follow-symlinks is False';
 
 #keep-going
 skip-rest('keep-going tests are brokenz');
