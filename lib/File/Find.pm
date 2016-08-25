@@ -41,13 +41,13 @@ sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
         take $elem if checkrules($elem, { :$name, :$type, :$exclude });
         if $recursive {
             unless !$follow-symlinks and $elem.IO ~~ :l {
-            	if $elem.IO ~~ :d {
-               		@targets.append: dir($elem);
-               		CATCH { when X::IO::Dir {
-                   		$_.throw unless $keep-going;
-                   		next;
-               		}}
-				}
+                if $elem.IO ~~ :d {
+                    @targets.append: dir($elem);
+                    CATCH { when X::IO::Dir {
+                        $_.throw unless $keep-going;
+                        next;
+                    }}
+                }
             }
         }
     }
