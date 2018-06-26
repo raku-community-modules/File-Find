@@ -75,7 +75,7 @@ The only exported function, C<find()>, generates a lazy
 list of files in given directory. Every element of the list is an
 C<IO::Path> object, described below.
 C<find()> takes one (or more) named arguments. The C<dir> argument
-is mandatory, and sets the directory C<find()> will traverse. 
+is mandatory, and sets the directory C<find()> will traverse.
 There are also few optional arguments. If more than one is passed,
 all of them must match for a file to be returned.
 
