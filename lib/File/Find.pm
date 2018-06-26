@@ -3,27 +3,25 @@ use v6;
 unit module File::Find;
 
 sub checkrules ($elem, %opts) {
-    if %opts<name>.defined {
-        if %opts<name> ~~ Str {
-            return False unless $elem.basename ~~ %opts<name>
+    with %opts<name> -> $name {
+        if $name ~~ Str {
+            return False unless $elem.basename ~~ $name
         } else {
-            return False unless $elem ~~ %opts<name>
+            return False unless $elem ~~ $name
         }
     }
-    if %opts<type>.defined {
-        given %opts<type> {
-            when 'dir' {
-                return False unless $elem ~~ :d
-            }
-            when 'file' {
-                return False unless $elem ~~ :f
-            }
-            when 'symlink' {
-                return False unless $elem ~~ :l
-            }
-            default {
-                die "type attribute has to be dir, file or symlink";
-            }
+    with %opts<type> -> $_ {
+        when 'dir' {
+            return False unless $elem ~~ :d
+        }
+        when 'file' {
+            return False unless $elem ~~ :f
+        }
+        when 'symlink' {
+            return False unless $elem ~~ :l
+        }
+        default {
+            die "type attribute has to be dir, file or symlink";
         }
     }
     return True
