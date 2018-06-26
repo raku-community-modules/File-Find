@@ -3,14 +3,14 @@ use v6;
 unit module File::Find;
 
 sub checkrules ($elem, %opts) {
-    if %opts<name>.defined {
+    with %opts<name> {
         if %opts<name> ~~ Str {
             return False unless $elem.basename ~~ %opts<name>
         } else {
             return False unless $elem ~~ %opts<name>
         }
     }
-    if %opts<type>.defined {
+    with %opts<type> {
         given %opts<type> {
             when 'dir' {
                 return False unless $elem ~~ :d
