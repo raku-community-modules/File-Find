@@ -15,7 +15,7 @@ File::Find - Get a lazy list of a directory tree
     say $list[0..3];
 
     # eagerly find all Perl-related files from the current directory
-    my @perl-files = find(dir => '.', name => /.p [l||m] $/);
+    my @perl-files = find(dir => '.', name => / "." p [l||m] $ /);
 
     # lazily find all directories within the 'rakudo' directory
     my $rakudo-dirs = find(dir => 'rakudo', type => 'dir');
