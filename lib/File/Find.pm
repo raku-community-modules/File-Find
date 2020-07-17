@@ -110,6 +110,13 @@ Parameter C<keep-going> tells C<find()> to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
 and keep going.
 
+=head2 recursive
+
+By default, C<find> will recursively traverse a directory tree, descending
+into any subdirectories it finds. This behaviour can be changed by setting
+C<recursive> to a false value. In this case, only the first level entries
+will be processed.
+
 =head1 Perl 5's File::Find
 
 Please note, that this module is not trying to be the verbatim port of
