@@ -5,11 +5,7 @@ unit module File::Find;
 sub checkrules (IO::Path $elem, %opts) {
     my $name = $elem.basename;
     if %opts<name>.defined {
-        if %opts<name> ~~ Str {
-            return False unless $name ~~ %opts<name>
-        } else {
-            return False unless $name ~~ %opts<name>
-        }
+        return False unless $name ~~ %opts<name>
     }
     if %opts<type>.defined {
         given %opts<type> {
