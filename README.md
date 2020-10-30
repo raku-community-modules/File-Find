@@ -49,7 +49,8 @@ regexes passed, by the way).
 
 **exclude**
 
-Specify a regex (or any other smartmatchable type) to exclude files / directories from the search.
+Specify a regex (or any other smartmatchable type) to exclude files /
+directories from the search.
 
 **type**
 
@@ -62,15 +63,15 @@ Parameter `keep-going` tells `find()` to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
 and keep going.
 
-**Perl 5's File::Find**
+**Perl's File::Find**
 
 Please note, that this module is not trying to be the verbatim port of
-Perl 5's File::Find module. Its interface is closer to Perl 5's
+Perl's File::Find module. Its interface is closer to Perl's
 File::Find::Rule, and its features are planned to be similar one day.
 
 ## CAVEATS
 
-List assignment is eager in Perl 6, so if you assign `find()` result
+List assignment is eager in Raku, so if you assign `find()` result
 to an array, the elements will be copied and the laziness will be
 spoiled. For a proper lazy list, assign a result to a scalar value
 (see SYNOPSIS).
