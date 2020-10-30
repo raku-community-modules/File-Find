@@ -3,9 +3,8 @@ use v6;
 unit module File::Find;
 
 sub checkrules (IO::Path $elem, %opts) {
-    my $name = $elem.basename;
-    if %opts<name>.defined {
-        return False unless $name ~~ %opts<name>
+    with %opts<name> -> $opts {
+        return False unless $elem.basename ~~ $opts
     }
     if %opts<type>.defined {
         given %opts<type> {
