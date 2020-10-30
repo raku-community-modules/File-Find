@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use File::Find;
-plan 11;
+plan 15;
 
 my $res = find(:dir<t/dir1>);
 my @test = $res.map({ .Str }).sort;
@@ -11,7 +11,7 @@ equals @test, <t/dir1/another_dir t/dir1/another_dir/empty_file t/dir1/another_d
 
 $res = find(:dir<t/dir1>, :name(/foo/));
 @test = $res.map({ .Str }).sort;
-equals @test, <t/dir1/file.foo t/dir1/foodir t/dir1/foodir/not_a_dir>, 'name with regex';
+equals @test, <t/dir1/file.foo t/dir1/foodir>, 'name with regex';
 
 # (default) recursive find
 
