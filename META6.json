@@ -2,7 +2,7 @@
     "perl"        : "6.*",
     "name"        : "File::Find",
     "license"     : "MIT",
-    "version"     : "0.1",
+    "version"     : "0.1.1",
     "description" : "File::Find for Raku",
     "depends"     : [],
     "provides"    : { "File::Find" : "lib/File/Find.rakumod" },
