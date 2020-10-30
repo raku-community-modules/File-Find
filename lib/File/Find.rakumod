@@ -2,7 +2,7 @@ use v6;
 
 unit module File::Find;
 
-sub checkrules ($elem, %opts) {
+sub checkrules (IO::Path $elem, %opts) {
     if %opts<name>.defined {
         if %opts<name> ~~ Str {
             return False unless $elem.basename ~~ %opts<name>
