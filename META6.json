@@ -5,7 +5,7 @@
     "version"     : "0.1",
     "description" : "File::Find for Raku",
     "depends"     : [],
-    "provides"    : { "File::Find" : "lib/File/Find.pm" },
+    "provides"    : { "File::Find" : "lib/File/Find.rakumod" },
     "authors" : [
         "Tadeusz “tadzik” Sośnierz",
         "Dagur Valberg Johansson",
