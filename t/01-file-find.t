@@ -38,7 +38,7 @@ equals @test, <t/dir1/foodir>, 'types: dir, combined with name';
 
 $res = find(:dir<t/dir1>, :type<file>, :name(/foo/));
 @test = $res.map({ .Str }).sort;
-equals @test, <t/dir1/file.foo t/dir1/foodir/not_a_dir>,
+equals @test, <t/dir1/file.foo>,
 	'types: file, combined with name';
 
 #exclude
@@ -79,7 +79,9 @@ if 0 {
 }
 
 sub equals(\a, \b, $name) {
-    ok ([&&] a >>~~<< b.map(*.IO)), $name
+    my $is-ok = is a.elems, b.elems, a ~ " and " ~ b ~ " have the same length ";
+    ok ([&&] a >>~~<< b.map(*.IO)), $name if $is-ok;
+
 }
 
 exit 0; # I have no idea what I'm doing, but I get Non-zero exit status w/o this
