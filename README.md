@@ -23,6 +23,9 @@ File::Find - Get a lazy list of a directory tree
     # lazily find all symlinks a normal user can access under `/etc`
     my $etc-symlinks = find(dir => '/etc/', type => 'symlink', keep-going => True);
 
+    # change to the given directory first before finding all files
+    my $list = find(dir => '/rc.d/', cd => '/etc/');
+
 ## DESCRIPTION
 
 `File::Find` allows you to get the contents of the given directory,
@@ -62,6 +65,11 @@ The available types are `file`, `dir` or `symlink`.
 Parameter `keep-going` tells `find()` to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
 and keep going.
+
+**cd**
+Parameter `cd` tells `find()` to first change directory before
+searching for `dir`.  Useful if you don't need directory prefixes
+in the returned results.
 
 **Perl's File::Find**
 

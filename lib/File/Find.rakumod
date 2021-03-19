@@ -24,7 +24,11 @@ sub checkrules (IO::Path $elem, %opts) {
 }
 
 sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
-    Bool :$keep-going = False) is export {
+    Bool :$keep-going = False, :$cd = '.') is export {
+
+    my $cwd = $*CWD;
+    LEAVE chdir $cwd;
+    chdir $cd;
 
     my @targets = dir($dir);
     gather while @targets {
