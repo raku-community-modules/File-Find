@@ -23,7 +23,7 @@ sub checkrules (IO::Path $elem, %opts) {
     return True
 }
 
-sub find (:$dir!, :$name, :$type, :$exclude = False, Bool :$recursive = True,
+sub find (:$dir!, Mu :$name, :$type, Mu :$exclude = False, Bool :$recursive = True,
     Bool :$keep-going = False) is export {
 
     my @targets = dir($dir);

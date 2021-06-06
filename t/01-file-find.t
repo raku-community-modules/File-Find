@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use File::Find;
-plan 15;
+plan 21;
 
 my $res = find(:dir<t/dir1>);
 my @test = $res.map({ .Str }).sort;
@@ -46,6 +46,18 @@ $res = find(:dir<t/dir1>, :type<file>,
             :exclude('t/dir1/another_dir'.IO));
 @test = $res.map({ .Str }).sort;
 equals @test, <t/dir1/file.bar t/dir1/file.foo t/dir1/foodir/not_a_dir>, 'exclude works';
+
+# exclude with junction 
+$res = find(:dir<t/dir1>, :type<file>, :exclude( any(/\.foo/, /\.bar/) ));
+@test = $res.map({ .Str }).sort;
+isnt( @test[0].^name, 'Junction', "Return from find should not be a Junction" );
+equals @test, < t/dir1/another_dir/empty_file  t/dir1/foodir/not_a_dir >, 'exclude with junction';
+
+# name with junction 
+$res = find(:dir<t/dir1>, :name( any(/\.foo/, /\.bar/) ));
+@test = $res.map({ .Str }).sort;
+isnt( @test[0].^name, 'Junction', "Return from find should not be a Junction" );
+equals @test, < t/dir1/another_dir/file.bar t/dir1/file.bar t/dir1/file.foo >, 'name with junction';
 
 
 #keep-going
