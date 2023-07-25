@@ -61,15 +61,22 @@ B<type>
 Given a type, C<find()> will only return files being the given type.
 The available types are C<file> , C<dir> or C<symlink> .
 
+B<recursive>
+
+If True, subdirectories are searched. Default: C<True>.
+
 B<keep-going>
 
 Parameter C<keep-going> tells C<find()> to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
 and keep going.
 
+B<Note: This parameter is currently broken and does not affect the search 
+in any way.>
+
 B<Perl's File::Find>
 
-Please note, that this module is not trying to be the verbatim port of
+Please note that this module is not trying to be the verbatim port of
 Perl's File::Find module. Its interface is closer to Perl's
 File::Find::Rule, and its features are planned to be similar one day.
 
