@@ -50,13 +50,19 @@ Specify a regex (or any other smartmatchable type) to exclude files / directorie
 
 Given a type, `find()` will only return files being the given type. The available types are `file` , `dir` or `symlink` .
 
+**recursive**
+
+If True, subdirectories are searched. Default: `True`.
+
 **keep-going**
 
 Parameter `keep-going` tells `find()` to not stop finding files on errors such as 'Access is denied', but rather ignore the errors and keep going.
 
+**Note: This parameter is currently broken and does not affect the search in any way.**
+
 **Perl's File::Find**
 
-Please note, that this module is not trying to be the verbatim port of Perl's File::Find module. Its interface is closer to Perl's File::Find::Rule, and its features are planned to be similar one day.
+Please note that this module is not trying to be the verbatim port of Perl's File::Find module. Its interface is closer to Perl's File::Find::Rule, and its features are planned to be similar one day.
 
 CAVEATS
 -------
