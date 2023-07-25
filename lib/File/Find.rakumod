@@ -1,5 +1,3 @@
-use v6;
-
 unit module File::Find;
 
 sub checkrules (IO::Path $elem, %opts) {
