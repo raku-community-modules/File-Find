@@ -1,77 +1,60 @@
-# NAME
+[![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/test.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions)
+
+NAME
+====
 
 File::Find - Get a lazy list of a directory tree
 
-## SYNOPSIS
+SYNOPSIS
+========
 
     use File::Find;
 
-    # recursively (and eagerly) find all files from the 'foo' directory
-    my @list = find(dir => 'foo');
+    my @list := find(dir => 'foo');
     say @list[0..3];
 
-    # the same as above, but lazily return the results
     my $list = find(dir => 'foo');
     say $list[0..3];
 
-    # eagerly find all Perl-related files from the current directory
-    my @perl-files = find(dir => '.', name => / "." p [l||m] $ /);
+DESCRIPTION
+===========
 
-    # lazily find all directories within the 'rakudo' directory
-    my $rakudo-dirs = find(dir => 'rakudo', type => 'dir');
+`File::Find` allows you to get the contents of the given directory, recursively, depth first. The only exported function, `find()`, generates a lazy list of files in given directory. Every element of the list is an `IO::Path` object, described below. `find()` takes one (or more) named arguments. The `dir` argument is mandatory, and sets the directory `find()` will traverse. There are also few optional arguments. If more than one is passed, all of them must match for a file to be returned.
 
-    # lazily find all symlinks a normal user can access under `/etc`
-    my $etc-symlinks = find(dir => '/etc/', type => 'symlink', keep-going => True);
+name
+----
 
-## DESCRIPTION
+Specify a name of the file `File::Find` is ought to look for. If you pass a string here, `find()` will return only the files with the given name. When passing a regex, only the files with path matching the pattern will be returned. Any other type of argument passed here will just be smartmatched against the path (which is exactly what happens to regexes passed, by the way).
 
-`File::Find` allows you to get the contents of the given directory,
-recursively, depth first.
+type
+----
 
-The only exported function, `find()`, generates a lazy
-list of files in given directory. Every element of the list is an
-`IO::Path` object, described below.
+Given a type, `find()` will only return files being the given type. The available types are `file`, `dir` or `symlink`.
 
-`find()` takes one (or more) named arguments. The `dir` argument
-is mandatory, and sets the directory `find()` will traverse.
+exclude
+-------
 
-There are also a few optional arguments. If more than one is passed,
-all of them must match for a file to be returned.
+Exclude is meant to be used for skipping certain big and uninteresting directories, like '.git'. Neither them nor any of their contents will be returned, saving a significant amount of time.
 
-**name**
+The value of `exclude` will be smartmatched against each IO object found by File::Find. It's recommended that it's passed as an IO object (or a Junction of those) so we avoid silly things like slashes vs backslashes on different platforms.
 
-Specify a name of the file `File::Find` is ought to look for. If you
-pass a string here, `find()` will return only the files with the given
-name. When passing a regex, only the files with path matching the
-pattern will be returned. Any other type of argument passed here will
-just be smartmatched against the path (which is exactly what happens to
-regexes passed, by the way).
+keep-going
+----------
 
-**exclude**
+Parameter `keep-going` tells `find()` to not stop finding files on errors such as 'Access is denied', but rather ignore the errors and keep going.
 
-Specify a regex (or any other smartmatchable type) to exclude files /
-directories from the search.
+recursive
+---------
 
-**type**
+By default, `find` will recursively traverse a directory tree, descending into any subdirectories it finds. This behaviour can be changed by setting `recursive` to a false value. In this case, only the first level entries will be processed.
 
-Given a type, `find()` will only return files being the given type.
-The available types are `file`, `dir` or `symlink`.
+Perl's File::Find
+=================
 
-**keep-going**
+Please note, that this module is not trying to be the verbatim port of Perl's File::Find module. Its interface is closer to Perl's File::Find::Rule, and its features are planned to be similar one day.
 
-Parameter `keep-going` tells `find()` to not stop finding files
-on errors such as 'Access is denied', but rather ignore the errors
-and keep going.
+CAVEATS
+=======
 
-**Perl's File::Find**
+List assignment is eager in Raku, so if You assign `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assign a result to a scalar value (see SYNOPSIS).
 
-Please note, that this module is not trying to be the verbatim port of
-Perl's File::Find module. Its interface is closer to Perl's
-File::Find::Rule, and its features are planned to be similar one day.
-
-## CAVEATS
-
-List assignment is eager in Raku, so if you assign `find()` result
-to an array, the elements will be copied and the laziness will be
-spoiled. For a proper lazy list, assign a result to a scalar value
-(see SYNOPSIS).

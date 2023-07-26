@@ -1,5 +1,3 @@
-use v6;
-
 unit module File::Find;
 
 sub checkrules (IO::Path $elem, %opts) {
@@ -111,15 +109,15 @@ into any subdirectories it finds. This behaviour can be changed by setting
 C<recursive> to a false value. In this case, only the first level entries
 will be processed.
 
-=head1 Perl 5's File::Find
+=head1 Perl's File::Find
 
 Please note, that this module is not trying to be the verbatim port of
-Perl 5's File::Find module. Its interface is closer to Perl 5's
+Perl's File::Find module. Its interface is closer to Perl's
 File::Find::Rule, and its features are planned to be similar one day.
 
 =head1 CAVEATS
 
-List assignment is eager in Perl 6, so if You assign C<find()> result
+List assignment is eager in Raku, so if You assign C<find()> result
 to an array, the elements will be copied and the laziness will be
 spoiled. For a proper lazy list, use either binding (C<:=>) or assign
 a result to a scalar value (see SYNOPSIS).
