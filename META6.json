@@ -15,6 +15,7 @@
     "Tobias Leich"
   ],
   "build-depends": [
+    "App::Mi6"
   ],
   "depends": [
   ],

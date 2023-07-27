@@ -25,6 +25,7 @@ jobs:
       - name: Install Dependencies
         run: |
           zef install --/test --deps-only .
+          mi6 build
           zef install --/test App::Prove6
       - name: Run Tests
         run: prove6 -l t
