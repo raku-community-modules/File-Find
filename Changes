@@ -2,5 +2,8 @@ Revision history for File-Find
 
 {{$NEXT}}
 
+0.2.0  2023-09-10T03:24:15+02:00
+    - support for junctions for `name` and `exclude` parameters
+
 0.1.2  2023-07-26T12:50:03+02:00
     - First version under raku-community-modules
