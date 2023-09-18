@@ -85,9 +85,10 @@ File::Find::Rule, and its features are planned to be similar one day.
 
 =head1 CAVEATS
 
-List assignment is eager in Raku, so if you assign C<find()> result
+List assignment is eager in Raku, so if you assign C<find()>'s result
 to an array, the elements will be copied and the laziness will be
-spoiled. For a proper lazy list, assign a result to a scalar value
+spoiled. 
+For a proper lazy list, use either binding (C<:=>) or assign a result to a scalar value
 (see SYNOPSIS).
 
 =end pod
