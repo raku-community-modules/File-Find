@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/test.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions)
+[![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/linux.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/macos.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/windows-spec.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions)
 
 NAME
 ====
