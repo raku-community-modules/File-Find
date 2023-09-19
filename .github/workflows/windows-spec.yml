@@ -28,4 +28,4 @@ jobs:
       - name: Install Dependencies
         run: zef install --/test --test-depends --deps-only .
       - name: Run Tests
-        run: raku -I. t/01-file-find.t
+        run: zef --debug --/prove --/tap-harness test .
