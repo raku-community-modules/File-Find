@@ -1,4 +1,4 @@
-name: test
+name: Linux
 
 on:
   push:
@@ -14,19 +14,17 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
-          - windows-latest
         raku-version:
           - 'latest'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: Raku/setup-raku@v1
         with:
           raku-version: ${{ matrix.raku-version }}
       - name: Install Dependencies
-        run: zef install --/test --test-depends --deps-only .
-      - name: Install App::Prove6
-        run: zef install --/test App::Prove6
+        run: |
+          zef install --/test --deps-only .
+          zef install --/test App::Prove6
       - name: Run Tests
-        run: prove6 -I. t
+        run: prove6 -l t
