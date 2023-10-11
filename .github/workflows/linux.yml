@@ -15,16 +15,13 @@ jobs:
         os:
           - ubuntu-latest
         raku-version:
-          - 'latest'
+          - "latest"
+          - "2023.08"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: Raku/setup-raku@v1
         with:
           raku-version: ${{ matrix.raku-version }}
-      - name: Install Dependencies
-        run: |
-          zef install --/test --deps-only .
-          zef install --/test App::Prove6
-      - name: Run Tests
-        run: prove6 -l t
+      - name: Run tests and Install
+        run: zef install . --debug
