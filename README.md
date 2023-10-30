@@ -10,11 +10,11 @@ SYNOPSIS
 
     use File::Find;
 
-    my @list := find(dir => 'foo');
-    say @list[0..3];
-
-    my $list = find(dir => 'foo');
+    my $list = find(dir => 'foo');   # Maintain laziness
     say $list[0..3];
+
+    my @list = find(dir => 'foo');   # Store eagerly
+    say @list[0..3];
 
 DESCRIPTION
 ===========
@@ -56,5 +56,4 @@ Please note, that this module is not trying to be the verbatim port of Perl's Fi
 CAVEATS
 =======
 
-List assignment is eager in Raku, so if You assign `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assign a result to a scalar value (see SYNOPSIS).
-
+List assignment is eager in Raku, so if you assign a `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assignment (`=`) with a scalar value (see SYNOPSIS).
