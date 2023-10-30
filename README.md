@@ -56,4 +56,4 @@ Please note, that this module is not trying to be the verbatim port of Perl's Fi
 CAVEATS
 =======
 
-List assignment is eager in Raku, so if you assign a `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assignment (`=`) with a scalar value (see SYNOPSIS).
+List assignment is eager in Raku, so if you assign a `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, assign to a scalar value (see SYNOPSIS).
