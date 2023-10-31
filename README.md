@@ -3,23 +3,26 @@
 NAME
 ====
 
-File::Find - Get a lazy list of a directory tree
+File::Find - Get a lazy sequence of a directory tree
 
 SYNOPSIS
 ========
 
     use File::Find;
 
-    my @list := find(dir => 'foo');
+    my @list = lazy find(dir => 'foo');  # Keep laziness
     say @list[0..3];
 
-    my $list = find(dir => 'foo');
+    my $list = find(dir => 'foo');       # Keep laziness
     say $list[0..3];
+
+    my @list = find(dir => 'foo');       # Drop laziness
+    say @list[0..3];
 
 DESCRIPTION
 ===========
 
-`File::Find` allows you to get the contents of the given directory, recursively, depth first. The only exported function, `find()`, generates a lazy list of files in given directory. Every element of the list is an `IO::Path` object, described below. `find()` takes one (or more) named arguments. The `dir` argument is mandatory, and sets the directory `find()` will traverse. There are also few optional arguments. If more than one is passed, all of them must match for a file to be returned.
+`File::Find` allows you to get the contents of the given directory, recursively, depth first. The only exported function, `find()`, generates a `Seq` of files in given directory. Every element of the `Seq` is an `IO::Path` object, described below. `find()` takes one (or more) named arguments. The `dir` argument is mandatory, and sets the directory `find()` will traverse. There are also few optional arguments. If more than one is passed, all of them must match for a file to be returned.
 
 name
 ----
@@ -56,5 +59,5 @@ Please note, that this module is not trying to be the verbatim port of Perl's Fi
 CAVEATS
 =======
 
-List assignment is eager in Raku, so if You assign `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assign a result to a scalar value (see SYNOPSIS).
+List assignment is eager by default in Raku, so if you assign a `find()` result to an array, the laziness will be dropped by default. To keep the laziness either insert `lazy` or assign to a scalar value (see SYNOPSIS).
 

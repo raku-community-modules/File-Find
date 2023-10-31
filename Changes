@@ -2,6 +2,9 @@ Revision history for File-Find
 
 {{$NEXT}}
 
+0.2.1  2023-10-31T11:31:35+01:00
+    - fix docs (Seq instead of "list" and usual implications)
+
 0.2.0  2023-09-10T03:24:15+02:00
     - support for junctions for `name` and `exclude` parameters
 

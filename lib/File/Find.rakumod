@@ -47,24 +47,27 @@ sub find (:$dir!, Mu :$name, :$type, Mu :$exclude = False, Bool :$recursive = Tr
 
 =head1 NAME
 
-File::Find - Get a lazy list of a directory tree
+File::Find - Get a lazy sequence of a directory tree
 
 =head1 SYNOPSIS
 
     use File::Find;
 
-    my @list := find(dir => 'foo');
+    my @list = lazy find(dir => 'foo');  # Keep laziness
     say @list[0..3];
 
-    my $list = find(dir => 'foo');
+    my $list = find(dir => 'foo');       # Keep laziness
     say $list[0..3];
+
+    my @list = find(dir => 'foo');       # Drop laziness
+    say @list[0..3];
 
 =head1 DESCRIPTION
 
 C<File::Find> allows you to get the contents of the given directory,
 recursively, depth first.
-The only exported function, C<find()>, generates a lazy
-list of files in given directory. Every element of the list is an
+The only exported function, C<find()>, generates a C<Seq>
+of files in given directory. Every element of the C<Seq> is an
 C<IO::Path> object, described below.
 C<find()> takes one (or more) named arguments. The C<dir> argument
 is mandatory, and sets the directory C<find()> will traverse. 
@@ -117,10 +120,9 @@ File::Find::Rule, and its features are planned to be similar one day.
 
 =head1 CAVEATS
 
-List assignment is eager in Raku, so if You assign C<find()> result
-to an array, the elements will be copied and the laziness will be
-spoiled. For a proper lazy list, use either binding (C<:=>) or assign
-a result to a scalar value (see SYNOPSIS).
+List assignment is eager by default in Raku, so if you assign a C<find()>
+result to an array, the laziness will be dropped by default. To keep the
+laziness either insert C<lazy> or assign to a scalar value (see SYNOPSIS).
 
 =end pod
 

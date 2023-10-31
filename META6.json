@@ -18,7 +18,7 @@
   ],
   "depends": [
   ],
-  "description": "Get a lazy list of a directory tree",
+  "description": "Get a lazy sequence of a directory tree",
   "license": "MIT",
   "name": "File::Find",
   "perl": "6.*",
@@ -32,5 +32,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
