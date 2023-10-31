@@ -10,10 +10,13 @@ SYNOPSIS
 
     use File::Find;
 
-    my $list = find(dir => 'foo');   # Maintain laziness
+    my @list = lazy find(dir => 'foo');  # Keep laziness
+    say @list[0..3];
+
+    my $list = find(dir => 'foo');       # Keep laziness
     say $list[0..3];
 
-    my @list = find(dir => 'foo');   # Store eagerly
+    my @list = find(dir => 'foo');       # Drop laziness
     say @list[0..3];
 
 DESCRIPTION
@@ -56,4 +59,4 @@ Please note, that this module is not trying to be the verbatim port of Perl's Fi
 CAVEATS
 =======
 
-List assignment is eager in Raku, so if you assign a `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, assign to a scalar value (see SYNOPSIS).
+List assignment is eager by default in Raku, so if you assign a `find()` result to an array, the laziness will be dropped by default. To keep the laziness either insert `lazy` or assign to a scalar value (see SYNOPSIS).
