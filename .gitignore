@@ -1,1 +1,3 @@
 .precomp/
+/File-Find-*
+*.rakucov

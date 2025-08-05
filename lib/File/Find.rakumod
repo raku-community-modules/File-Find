@@ -1,28 +1,33 @@
-unit module File::Find;
-
-sub checkrules (IO::Path $elem, %opts) {
+my sub checkrules(IO::Path:D $io, %opts) {
     with %opts<name> -> $opts {
-        return False unless $elem.basename ~~ $opts
+        return False unless $io.basename ~~ $opts
     }
     with %opts<type>  {
         when 'dir' {
-            return False unless $elem ~~ :d
+            return False unless $io.d;
         }
         when 'file' {
-            return False unless $elem ~~ :f
+            return False unless $io.f;
         }
         when 'symlink' {
-            return False unless $elem ~~ :l
+            return False unless $io.l;
         }
         default {
             die "type attribute has to be dir, file or symlink";
         }
     }
-    return True
+    True
 }
 
-sub find (:$dir!, Mu :$name, :$type, Mu :$exclude = False, Bool :$recursive = True,
-    Bool :$keep-going = False) is export {
+#- find ------------------------------------------------------------------------
+my sub find(
+       :$dir!,
+  Mu   :$name,
+       :$type,
+  Mu   :$exclude    = False,
+  Bool :$recursive  = True,
+  Bool :$keep-going = False
+) is export {
 
     my @targets = dir($dir);
     gather while @targets {
@@ -32,98 +37,21 @@ sub find (:$dir!, Mu :$name, :$type, Mu :$exclude = False, Bool :$recursive = Tr
         next if $elem ~~ $exclude;
         take $elem if checkrules($elem, { :$name, :$type, :$exclude });
         if $recursive {
-            if $elem.IO ~~ :d {
+            if $elem.IO.d {
                 @targets.append: dir($elem);
-                CATCH { when X::IO::Dir {
-                    $_.throw unless $keep-going;
-                    next;
-                }}
+                CATCH {
+                    when X::IO::Dir {
+                        $_.throw unless $keep-going;
+                        next;
+                    }
+                }
             }
         }
     }
 }
 
-=begin pod
+#- hack ------------------------------------------------------------------------
+# To allow version fetching in test files
+unit module File::Find:ver<0.2.0>:auth<zef:raku-community-modules>;
 
-=head1 NAME
-
-File::Find - Get a lazy sequence of a directory tree
-
-=head1 SYNOPSIS
-
-    use File::Find;
-
-    my @list = lazy find(dir => 'foo');  # Keep laziness
-    say @list[0..3];
-
-    my $list = find(dir => 'foo');       # Keep laziness
-    say $list[0..3];
-
-    my @list = find(dir => 'foo');       # Drop laziness
-    say @list[0..3];
-
-=head1 DESCRIPTION
-
-C<File::Find> allows you to get the contents of the given directory,
-recursively, depth first.
-The only exported function, C<find()>, generates a C<Seq>
-of files in given directory. Every element of the C<Seq> is an
-C<IO::Path> object, described below.
-C<find()> takes one (or more) named arguments. The C<dir> argument
-is mandatory, and sets the directory C<find()> will traverse. 
-There are also few optional arguments. If more than one is passed,
-all of them must match for a file to be returned.
-
-=head2 name
-
-Specify a name of the file C<File::Find> is ought to look for. If you
-pass a string here, C<find()> will return only the files with the given
-name. When passing a regex, only the files with path matching the
-pattern will be returned. Any other type of argument passed here will
-just be smartmatched against the path (which is exactly what happens to
-regexes passed, by the way).
-
-=head2 type
-
-Given a type, C<find()> will only return files being the given type.
-The available types are C<file>, C<dir> or C<symlink>.
-
-=head2 exclude
-
-Exclude is meant to be used for skipping certain big and uninteresting
-directories, like '.git'. Neither them nor any of their contents will be
-returned, saving a significant amount of time.
-
-The value of C<exclude> will be smartmatched against each IO object
-found by File::Find. It's recommended that it's passed as an IO object
-(or a Junction of those) so we avoid silly things like slashes
-vs backslashes on different platforms.
-
-=head2 keep-going
-
-Parameter C<keep-going> tells C<find()> to not stop finding files
-on errors such as 'Access is denied', but rather ignore the errors
-and keep going.
-
-=head2 recursive
-
-By default, C<find> will recursively traverse a directory tree, descending
-into any subdirectories it finds. This behaviour can be changed by setting
-C<recursive> to a false value. In this case, only the first level entries
-will be processed.
-
-=head1 Perl's File::Find
-
-Please note, that this module is not trying to be the verbatim port of
-Perl's File::Find module. Its interface is closer to Perl's
-File::Find::Rule, and its features are planned to be similar one day.
-
-=head1 CAVEATS
-
-List assignment is eager by default in Raku, so if you assign a C<find()>
-result to an array, the laziness will be dropped by default. To keep the
-laziness either insert C<lazy> or assign to a scalar value (see SYNOPSIS).
-
-=end pod
-
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

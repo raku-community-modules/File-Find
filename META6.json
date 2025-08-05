@@ -1,7 +1,7 @@
 {
   "auth": "zef:raku-community-modules",
   "authors": [
-    "Tadeusz “tadzik” Sośnierz",
+    "Tadeusz Sośnierz",
     "Dagur Valberg Johansson",
     "Elizabeth Mattijsen",
     "Filip Sergot",
@@ -11,7 +11,7 @@
     "Moritz Lenz",
     "Paul Cochrane",
     "Steve Mynott",
-    "timo",
+    "Timo Paulssen",
     "Tobias Leich"
   ],
   "build-depends": [
@@ -21,14 +21,23 @@
   "description": "Get a lazy sequence of a directory tree",
   "license": "MIT",
   "name": "File::Find",
-  "perl": "6.*",
+  "perl": "6.d",
+  "production": true,
   "provides": {
     "File::Find": "lib/File/Find.rakumod"
   },
+  "raku": "6.d",
   "resources": [
   ],
-  "source-url": "git://github.com/raku-community-modules/File-Find.git",
+  "source-url": "https://github.com/raku-community-modules/File-Find.git",
+  "support": {
+    "bugtracker": "https://github.com/raku-community-moduled/File-Find/issues",
+    "email": "community@raku.org",
+    "source": "git://github.com/raku-community-modules/File-Find.git"
+  },
   "tags": [
+    "FILE",
+    "FIND"
   ],
   "test-depends": [
   ],

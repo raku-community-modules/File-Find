@@ -1,12 +1,16 @@
 Revision history for File-Find
 
 {{$NEXT}}
+    - Modernize pod, META and test-file extensions
+    - Add coverage tests (at 100%)
+    - Add CI badge for each OS
+    - Update copyright year
 
 0.2.1  2023-10-31T11:31:35+01:00
     - fix docs (Seq instead of "list" and usual implications)
 
 0.2.0  2023-09-10T03:24:15+02:00
-    - support for junctions for `name` and `exclude` parameters
+    - Support for junctions for `name` and `exclude` parameters
 
 0.1.2  2023-07-26T12:50:03+02:00
     - First version under raku-community-modules

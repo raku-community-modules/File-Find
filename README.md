@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/linux.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/macos.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/windows-spec.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions)
+[![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/linux.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/macos.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions) [![Actions Status](https://github.com/raku-community-modules/File-Find/actions/workflows/windows.yml/badge.svg)](https://github.com/raku-community-modules/File-Find/actions)
 
 NAME
 ====
@@ -8,21 +8,25 @@ File::Find - Get a lazy sequence of a directory tree
 SYNOPSIS
 ========
 
-    use File::Find;
+```raku
+use File::Find;
 
-    my @list = lazy find(dir => 'foo');  # Keep laziness
-    say @list[0..3];
+my @list := find(dir => 'foo');  # keep laziness
+say @list[0..3];
 
-    my $list = find(dir => 'foo');       # Keep laziness
-    say $list[0..3];
+my $list = find(dir => 'foo');   # keep laziness
+say $list[0..3];
 
-    my @list = find(dir => 'foo');       # Drop laziness
-    say @list[0..3];
+my @list = find(dir => 'foo');   # drop laziness
+say @list[0..3];
+```
 
 DESCRIPTION
 ===========
 
-`File::Find` allows you to get the contents of the given directory, recursively, depth first. The only exported function, `find()`, generates a `Seq` of files in given directory. Every element of the `Seq` is an `IO::Path` object, described below. `find()` takes one (or more) named arguments. The `dir` argument is mandatory, and sets the directory `find()` will traverse. There are also few optional arguments. If more than one is passed, all of them must match for a file to be returned.
+`File::Find` allows you to get the contents of the given directory, recursively, depth first. The only exported function, `find()`, generates a lazy list of files in given directory. Every element of the list is an `IO::Path` object, described below.
+
+`find()` takes one (or more) named arguments. The `dir` argument is mandatory, and sets the directory `find()` will traverse. There are also few optional arguments. If more than one is passed, all of them must match for a file to be returned.
 
 name
 ----
@@ -51,13 +55,46 @@ recursive
 
 By default, `find` will recursively traverse a directory tree, descending into any subdirectories it finds. This behaviour can be changed by setting `recursive` to a false value. In this case, only the first level entries will be processed.
 
-Perl's File::Find
-=================
-
-Please note, that this module is not trying to be the verbatim port of Perl's File::Find module. Its interface is closer to Perl's File::Find::Rule, and its features are planned to be similar one day.
-
 CAVEATS
 =======
 
-List assignment is eager by default in Raku, so if you assign a `find()` result to an array, the laziness will be dropped by default. To keep the laziness either insert `lazy` or assign to a scalar value (see SYNOPSIS).
+List assignment is eager in Raku, so if You assign `find()` result to an array, the elements will be copied and the laziness will be spoiled. For a proper lazy list, use either binding (`:=`) or assign a result to a scalar value (see SYNOPSIS).
+
+AUTHORS
+=======
+
+  * Tadeusz Sośnierz
+
+  * Dagur Valberg Johansson
+
+  * Elizabeth Mattijsen
+
+  * Filip Sergot
+
+  * GlitchMr
+
+  * Heather
+
+  * isleofmax
+
+  * Moritz Lenz
+
+  * Paul Cochrane
+
+  * Steve Mynott
+
+  * Timo Paulssen
+
+  * Tobias Leich"
+
+Source can be located at: https://github.com/raku-community-modules/File-Find . Comments and Pull Requests are welcome.
+
+COPYRIGHT AND LICENSE
+=====================
+
+Copyright 2010-2022 Tadeusz Sośnierz
+
+Copuright 2023-2025 Raku Community
+
+This library is free software; you can redistribute it and/or modify it under the MIT License.
 

@@ -1,6 +1,7 @@
 use Test;
 use File::Find;
-plan 21;
+
+plan 25;
 
 my $res = find(:dir<t/dir1>);
 my @test = $res.map({ .Str }).sort;
@@ -38,7 +39,7 @@ equals @test, <t/dir1/foodir>, 'types: dir, combined with name';
 $res = find(:dir<t/dir1>, :type<file>, :name(/foo/));
 @test = $res.map({ .Str }).sort;
 equals @test, <t/dir1/file.foo>,
-	'types: file, combined with name';
+        'types: file, combined with name';
 
 #exclude
 $res = find(:dir<t/dir1>, :type<file>,
@@ -58,41 +59,41 @@ $res = find(:dir<t/dir1>, :name( any(/\.foo/, /\.bar/) ));
 isnt( @test[0].^name, 'Junction', "Return from find should not be a Junction" );
 equals @test, < t/dir1/another_dir/file.bar t/dir1/file.bar t/dir1/file.foo >, 'name with junction';
 
+# symlink
+@test = find(:dir<t/dir1>, :type<symlink>);
+is $@test.elems, 0, 'lives and no symlinks found';
 
-#keep-going
-skip-rest('keep-going tests are brokenz');
-if 0 {
-    my $skip-first = True;
-    my $throw = True;
+# wrong type
+dies-ok { find(:dir<t/dir1>, :type<foo>) }, "dies on incorrect type";
 
-    # Wrap dir to throw when we want it to.
-    my $w = &dir.wrap({
-        if $skip-first {
-	  $skip-first = False;
-          return callsame;
-	}
+# keep-going
+my $skip-first = True;
+my $throw = True;
 
-        if $throw {
-	    $throw = False;
-            X::IO::Dir.new(path => "dummy", os-error => "dummy").throw
-        }
-	callsame;
-    });
+# Wrap dir to throw when we want it to.
+my $w = &dir.wrap(sub ($_) {
+    if $skip-first {
+         $skip-first = False;
+         return callsame;
+    }
 
-    dies-ok(sub { find(:dir<t/dir1>) },
-        "dies due to X::IO::Dir");
+    if $throw {
+        $throw = False;
+        X::IO::Dir.new(path => "dummy", os-error => "dummy").throw
+    }
+    callsame;
+});
 
-    $throw = $skip-first = True;
-    $res = find(:dir<t/dir1>, :name<file.bar>, keep-going => True);
-    is $res.elems, 1, 'found one of two files due to X::IO::Dir';
+dies-ok(sub { find(:dir<t/dir1>) },
+    "dies due to X::IO::Dir");
 
-    LEAVE { &dir.unwrap($w); }
-}
+$throw = $skip-first = True;
+$res = find(:dir<t/dir1>, :name<file.bar>, keep-going => True);
+is $res.elems, 1, 'found one of two files due to X::IO::Dir';
 
 sub equals(\a, \b, $name) {
     my $is-ok = is a.elems, b.elems, a ~ " and " ~ b ~ " have the same length ";
     ok ([&&] a >>~~<< b.map(*.IO)), $name if $is-ok;
-
 }
 
-exit 0; # I have no idea what I'm doing, but I get Non-zero exit status w/o this
+# vim: expandtab shiftwidth=4
