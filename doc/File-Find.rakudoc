@@ -57,18 +57,27 @@ found by File::Find. It's recommended that it's passed as an IO object
 (or a Junction of those) so we avoid silly things like slashes
 vs backslashes on different platforms.
 
+Default is C<False>, which means that no files will be excluded.
+
 =head2 keep-going
 
 Parameter C<keep-going> tells C<find()> to not stop finding files
 on errors such as 'Access is denied', but rather ignore the errors
-and keep going.
+and keep going.  Default is C<False>
 
 =head2 recursive
 
 By default, C<find> will recursively traverse a directory tree, descending
 into any subdirectories it finds. This behaviour can be changed by setting
 C<recursive> to a false value. In this case, only the first level entries
-will be processed.
+will be processed.  Default is C<True>.
+
+=head2 follow-symlinks
+
+Parameter C<follow-symlinks> tells C<find()> whether or not it should
+follow symlinks during recursive searches. This will still return
+symlinks in its results, if the type parameter allows.  The default
+is C<True>.
 
 =head1 CAVEATS
 

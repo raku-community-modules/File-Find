@@ -1,6 +1,8 @@
 Revision history for File-Find
 
 {{$NEXT}}
+    - Add support for :follow-symlinks argument (re-imagined
+      from PR #18, Garland-g++)
     - Modernize pod, META and test-file extensions
     - Add coverage tests (at 100%)
     - Add CI badge for each OS

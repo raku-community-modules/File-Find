@@ -24,9 +24,10 @@ my sub find(
        :$dir!,
   Mu   :$name,
        :$type,
-  Mu   :$exclude    = False,
-  Bool :$recursive  = True,
-  Bool :$keep-going = False
+  Mu   :$exclude         = False,
+  Bool :$recursive       = True,
+  Bool :$keep-going      = False,
+  Bool :$follow-symlinks = True
 ) is export {
 
     my @targets = dir($dir);
@@ -35,14 +36,19 @@ my sub find(
         # exclude is special because it also stops traversing inside,
         # which checkrules does not
         next if $elem ~~ $exclude;
+
         take $elem if checkrules($elem, { :$name, :$type, :$exclude });
+
         if $recursive {
-            if $elem.IO.d {
-                @targets.append: dir($elem);
-                CATCH {
-                    when X::IO::Dir {
-                        $_.throw unless $keep-going;
-                        next;
+            my $io := $elem.IO;
+            if $follow-symlinks || !$io.l {
+                if $io.d {
+                    @targets.append: dir($elem);
+                    CATCH {
+                        when X::IO::Dir {
+                            .rethrow unless $keep-going;
+                            next;
+                        }
                     }
                 }
             }
@@ -52,6 +58,6 @@ my sub find(
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module File::Find:ver<0.2.0>:auth<zef:raku-community-modules>;
+unit module File::Find:ver<0.2.1>:auth<zef:raku-community-modules>;
 
 # vim: expandtab shiftwidth=4

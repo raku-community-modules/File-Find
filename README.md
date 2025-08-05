@@ -45,15 +45,22 @@ Exclude is meant to be used for skipping certain big and uninteresting directori
 
 The value of `exclude` will be smartmatched against each IO object found by File::Find. It's recommended that it's passed as an IO object (or a Junction of those) so we avoid silly things like slashes vs backslashes on different platforms.
 
+Default is `False`, which means that no files will be excluded.
+
 keep-going
 ----------
 
-Parameter `keep-going` tells `find()` to not stop finding files on errors such as 'Access is denied', but rather ignore the errors and keep going.
+Parameter `keep-going` tells `find()` to not stop finding files on errors such as 'Access is denied', but rather ignore the errors and keep going. Default is `False`
 
 recursive
 ---------
 
-By default, `find` will recursively traverse a directory tree, descending into any subdirectories it finds. This behaviour can be changed by setting `recursive` to a false value. In this case, only the first level entries will be processed.
+By default, `find` will recursively traverse a directory tree, descending into any subdirectories it finds. This behaviour can be changed by setting `recursive` to a false value. In this case, only the first level entries will be processed. Default is `True`.
+
+follow-symlinks
+---------------
+
+Parameter `follow-symlinks` tells `find()` whether or not it should follow symlinks during recursive searches. This will still return symlinks in its results, if the type parameter allows. The default is `True`.
 
 CAVEATS
 =======
