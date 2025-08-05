@@ -70,14 +70,28 @@ dies-ok { find(:dir<t/dir1>, :type<foo>) }, "dies on incorrect type";
 my $skip-first = True;
 my $throw = True;
 
-#follow-symlinks
-$res = find(:dir<t/dir2>);
-@test = $res.map({ .Str }).sort;
-equals @test, <t/dir2/file.foo t/dir2/symdir t/dir2/symdir/empty_file t/dir2/symdir/file.bar>, 'follow-syminks is True';
+# follow-symlinks
+my $symlink-dir := $*PROGRAM.sibling("dir2/symdir");
+symlink($*PROGRAM.sibling("dir1/another_dir"), $symlink-dir);
+if $symlink-dir.e {
+    $res = find(:dir<t/dir2>);
+    @test = $res.map({ .Str }).sort;
+    equals @test,
+      <t/dir2/file.foo t/dir2/symdir t/dir2/symdir/empty_file t/dir2/symdir/file.bar>,
+      'follow-syminks is True';
 
-$res = find(:dir<t/dir2>, follow-symlinks => False);
-@test = $res.map({ .Str }).sort;
-equals @test, <t/dir2/file.foo t/dir2/symdir>, 'follow-symlinks is False';
+    $res = find(:dir<t/dir2>, :!follow-symlinks);
+    @test = $res.map({ .Str }).sort;
+    equals @test,
+      <t/dir2/file.foo t/dir2/symdir>,
+      'follow-symlinks is False';
+
+    unlink $symlink-dir;  # cleanup for the next test run, just in case
+}
+
+else {
+    pass "Cannot check symlinks on dirs in this OS" for ^2;
+}
 
 # Wrap dir to throw when we want it to.
 my $w = &dir.wrap(sub ($_) {
