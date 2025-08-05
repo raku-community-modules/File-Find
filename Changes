@@ -1,6 +1,8 @@
 Revision history for File-Find
 
 {{$NEXT}}
+
+0.2.2  2025-08-05T11:06:19+02:00
     - Add support for :follow-symlinks argument (re-imagined
       from PR #18, Garland-g++)
     - Modernize pod, META and test-file extensions

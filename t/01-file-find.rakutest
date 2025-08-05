@@ -90,7 +90,7 @@ if $symlink-dir.e {
 }
 
 else {
-    pass "Cannot check symlinks on dirs in this OS" for ^2;
+    pass "Cannot check symlinks on dirs in this OS" for ^4;
 }
 
 # Wrap dir to throw when we want it to.
