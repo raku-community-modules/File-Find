@@ -31,7 +31,7 @@
   ],
   "source-url": "https://github.com/raku-community-modules/File-Find.git",
   "support": {
-    "bugtracker": "https://github.com/raku-community-moduled/File-Find/issues",
+    "bugtracker": "https://github.com/raku-community-modules/File-Find/issues",
     "email": "community@raku.org",
     "source": "git://github.com/raku-community-modules/File-Find.git"
   },
