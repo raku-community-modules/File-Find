@@ -112,7 +112,7 @@ dies-ok(sub { find(:dir<t/dir1>) },
 
 $throw = $skip-first = True;
 $res = find(:dir<t/dir1>, :name<file.bar>, keep-going => True);
-is $res.elems, 1, 'found one of two files due to X::IO::Dir';
+is $res.elems, 2, 'found both files with keep-going';
 
 sub equals(\a, \b, $name) {
     my $is-ok = is a.elems, b.elems, a ~ " and " ~ b ~ " have the same length ";
