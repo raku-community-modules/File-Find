@@ -67,7 +67,7 @@ is $@test.elems, 0, 'lives and no symlinks found';
 dies-ok { find(:dir<t/dir1>, :type<foo>) }, "dies on incorrect type";
 
 # keep-going
-my $skip-first = True;
+my $skip-one = True;
 my $throw = True;
 
 # follow-symlinks
@@ -93,15 +93,18 @@ else {
     pass "Cannot check symlinks on dirs in this OS" for ^4;
 }
 
-# Wrap dir to throw when we want it to.
+# we mock dir to mimic X::IO::Dir errors
+# this strongly depends on the implementation of find
+# the first `dir` call is for the root location to search
+# therefore we wouldn't want to throw an exception at accessing it outright
+# that's why we want to be able to leaving one call untouched on demand ($skip-one)
 my $w = &dir.wrap(sub ($_) {
-    if $skip-first {
-         $skip-first = False;
+    if $skip-one {
+         $skip-one = False;
          return callsame;
     }
 
     if $throw {
-        $throw = False;
         X::IO::Dir.new(path => "dummy", os-error => "dummy").throw
     }
     callsame;
@@ -110,9 +113,9 @@ my $w = &dir.wrap(sub ($_) {
 dies-ok(sub { find(:dir<t/dir1>) },
     "dies due to X::IO::Dir");
 
-$throw = $skip-first = True;
+$throw = $skip-one = True;
 $res = find(:dir<t/dir1>, :name<file.bar>, keep-going => True);
-is $res.elems, 2, 'found both files with keep-going';
+is $res.elems, 1, 'found only the top-level file due to X::IO::Dir';
 
 sub equals(\a, \b, $name) {
     my $is-ok = is a.elems, b.elems, a ~ " and " ~ b ~ " have the same length ";
