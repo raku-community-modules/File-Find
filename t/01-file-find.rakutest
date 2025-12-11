@@ -72,8 +72,7 @@ my $throw = True;
 
 # follow-symlinks
 my $symlink-dir := $*PROGRAM.sibling("dir2/symdir");
-symlink($*PROGRAM.sibling("dir1/another_dir"), $symlink-dir);
-if $symlink-dir.e {
+if symlink($*PROGRAM.sibling("dir1/another_dir"), $symlink-dir) && $symlink-dir.e {
     $res = find(:dir<t/dir2>);
     @test = $res.map({ .Str }).sort;
     equals @test,
