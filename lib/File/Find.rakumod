@@ -58,6 +58,6 @@ my sub find(
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module File::Find:ver<0.2.4>:auth<zef:raku-community-modules>;
+unit module File::Find:ver<0.2.5>:auth<zef:raku-community-modules>;
 
 # vim: expandtab shiftwidth=4
